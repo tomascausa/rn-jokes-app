@@ -22,10 +22,10 @@ const Author: React.FC<AuthorProps> = ({label, style}) => {
 const JokeCard: React.FC<JokeCardProps> = ({data, mode}) => {
     let authorElement;
 
-    if (data.author) {
+    if (data.permalink) {
         authorElement = (
             <Author
-                label={data.author}
+                label={data.permalink}
                 style={mode === 'small' ? styles.smallAuthor : styles.author}
             />
         );
@@ -35,7 +35,7 @@ const JokeCard: React.FC<JokeCardProps> = ({data, mode}) => {
         <View
             style={mode === 'small' ? styles.smallContainer : styles.container}>
             <Text style={mode === 'small' ? styles.smallTitle : styles.title}>
-                {data.message}
+                {data.joke}
             </Text>
             {authorElement}
         </View>

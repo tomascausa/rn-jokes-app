@@ -1,5 +1,5 @@
 export type Joke = {
     id: string;
-    message: string;
-    author?: string;
+    joke: string;
+    permalink?: string;
 };

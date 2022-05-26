@@ -8,55 +8,59 @@ import {Joke} from '../types/Joke';
 import Button from '../components/UI/Button';
 import JokeCard from '../components/UI/JokeCard';
 import Carousel from '../components/Carousel/Carousel';
+import useJokes from '../hooks/useJokes';
 
 const JOKES = [
     {
         id: 'j1',
-        message: "Anyway. You're the designer and you know that to do best.",
-        author: 'designhumour',
+        joke: "Anyway. You're the designer and you know that to do best.",
+        permalink: 'designhumour',
     },
     {
         id: 'j2',
-        message:
-            "Mmmh. Do you think it will be easy to read? Let's make it bigger 😂",
-        author: 'designhumour',
+        joke: "Mmmh. Do you think it will be easy to read? Let's make it bigger 😂",
+        permalink: 'designhumour',
     },
     {
         id: 'j3',
-        message: "There's something that doesn't work. But I'm not sure what.",
-        author: 'designhumour',
+        joke: "There's something that doesn't work. But I'm not sure what.",
+        permalink: 'designhumour',
     },
     {
         id: 'j4',
-        message: "Anyway. You're the designer and you know that to do best.",
-        author: 'designhumour',
+        joke: "Anyway. You're the designer and you know that to do best.",
+        permalink: 'designhumour',
     },
     {
         id: 'j5',
-        message: "There's something that doesn't work. But I'm not sure what.",
-        author: 'designhumour',
+        joke: "There's something that doesn't work. But I'm not sure what.",
+        permalink: 'designhumour',
     },
     {
         id: 'j6',
-        message: "Anyway. You're the designer and you know that to do best.",
-        author: 'designhumour',
+        joke: "Anyway. You're the designer and you know that to do best.",
+        permalink: 'designhumour',
     },
     {
         id: 'j7',
-        message: "There's something that doesn't work. But I'm not sure what.",
-        author: 'designhumour',
+        joke: "There's something that doesn't work. But I'm not sure what.",
+        permalink: 'designhumour',
     },
     {
         id: 'j8',
-        message: "Anyway. You're the designer and you know that to do best.",
-        author: 'designhumour',
+        joke: "Anyway. You're the designer and you know that to do best.",
+        permalink: 'designhumour',
     },
 ];
 
 const Jokes: React.FC = () => {
     const navigation = useNavigation();
     const context = useContext(Context);
+    const {jokesData, jokesLoading} = useJokes();
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    console.log('loading', jokesLoading);
+    console.log(jokesData);
 
     const handleIndexUpdate = (index: number) => {
         setCurrentIndex(index);
@@ -84,13 +88,15 @@ const Jokes: React.FC = () => {
                 </Text>
             </View>
             <View style={styles.carouselContainer}>
-                <Carousel
-                    items={JOKES}
-                    renderItem={(scrollX: any, {item}: {item: Joke}) => (
-                        <JokeCard data={item} />
-                    )}
-                    onIndexUpdate={handleIndexUpdate}
-                />
+                {!jokesLoading ?? (
+                    <Carousel
+                        items={jokesData}
+                        renderItem={(scrollX: any, {item}: {item: Joke}) => (
+                            <JokeCard data={item} />
+                        )}
+                        onIndexUpdate={handleIndexUpdate}
+                    />
+                )}
             </View>
             <View style={styles.buttonContainer}>
                 <Button onPress={() => handleSaveJoke()}>Save</Button>
