@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     stepperContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 35,
+        marginTop: 10,
     },
     step: {
         width: 50,

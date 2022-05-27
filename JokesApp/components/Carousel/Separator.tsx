@@ -7,8 +7,8 @@ const Separator: React.FC = () => {
 
 const styles = StyleSheet.create({
     container: {
-        width: 20,
-        height: 20,
+        width: 10,
+        height: 10,
     },
 });
 

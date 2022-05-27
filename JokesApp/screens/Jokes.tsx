@@ -7,15 +7,19 @@ import {
     SafeAreaView,
     Pressable,
     ActivityIndicator,
+    Dimensions,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import {Context} from '../store/context';
 import {Joke} from '../types/Joke';
+import {GlobalStyles} from '../constants/styles';
 import Button from '../components/UI/Button';
 import JokeCard from '../components/UI/JokeCard';
 import Carousel from '../components/Carousel/Carousel';
 import useJokes from '../hooks/useJokes';
+
+const {width} = Dimensions.get('window');
 
 const Jokes: React.FC = () => {
     const navigation = useNavigation();
@@ -57,7 +61,12 @@ const Jokes: React.FC = () => {
                     <Carousel
                         items={jokes}
                         renderItem={(scrollX: any, {item}: {item: Joke}) => (
-                            <JokeCard data={item} />
+                            <JokeCard
+                                data={item}
+                                style={styles.cardContainer}
+                                titleStyle={styles.cardTitle}
+                                authorStyle={styles.cardAuthor}
+                            />
                         )}
                         onIndexUpdate={handleIndexUpdate}
                     />
@@ -111,6 +120,31 @@ const styles = StyleSheet.create({
     carouselContainer: {
         flex: 1,
         marginTop: 40,
+    },
+    cardContainer: {
+        width: width - 50,
+        marginHorizontal: 20,
+        marginBottom: 30,
+        paddingTop: 60,
+        paddingBottom: 30,
+        paddingHorizontal: 20,
+        shadowColor: GlobalStyles.colors.primary,
+        shadowOffset: {
+            width: 0,
+            height: 15,
+        },
+        shadowOpacity: 0.3,
+        shadowRadius: 10,
+        elevation: 15,
+        borderRadius: 8,
+        backgroundColor: GlobalStyles.colors.primary,
+    },
+    cardTitle: {
+        fontSize: 30,
+        lineHeight: 42,
+    },
+    cardAuthor: {
+        fontSize: 25,
     },
     buttonContainer: {
         marginTop: 40,
