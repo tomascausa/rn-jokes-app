@@ -10,11 +10,14 @@ const Saved: React.FC = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlratList
+            <FlatList
                 data={context.jokes}
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
                 ItemSeparatorComponent={Separator}
+                renderItem={({item}: {item: Joke}) => (
+                    <JokeCard data={item} mode="small" />
+                )}
             />
         </SafeAreaView>
     );

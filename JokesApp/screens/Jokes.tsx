@@ -17,49 +17,6 @@ import JokeCard from '../components/UI/JokeCard';
 import Carousel from '../components/Carousel/Carousel';
 import useJokes from '../hooks/useJokes';
 
-const JOKES = [
-    {
-        id: 'j1',
-        joke: "Anyway. You're the designer and you know that to do best.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j2',
-        joke: "Mmmh. Do you think it will be easy to read? Let's make it bigger 😂",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j3',
-        joke: "There's something that doesn't work. But I'm not sure what.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j4',
-        joke: "Anyway. You're the designer and you know that to do best.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j5',
-        joke: "There's something that doesn't work. But I'm not sure what.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j6',
-        joke: "Anyway. You're the designer and you know that to do best.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j7',
-        joke: "There's something that doesn't work. But I'm not sure what.",
-        permalink: 'designhumour',
-    },
-    {
-        id: 'j8',
-        joke: "Anyway. You're the designer and you know that to do best.",
-        permalink: 'designhumour',
-    },
-];
-
 const Jokes: React.FC = () => {
     const navigation = useNavigation();
     const context = useContext(Context);
@@ -71,7 +28,7 @@ const Jokes: React.FC = () => {
     };
 
     const handleSaveJoke = () => {
-        context.addJoke(JOKES[currentIndex]);
+        context.addJoke(jokes[currentIndex]);
     };
 
     return (
