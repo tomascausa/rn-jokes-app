@@ -1,6 +1,13 @@
 import React, {useContext, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Text, View, StyleSheet, SafeAreaView, Pressable} from 'react-native';
+import {
+    Text,
+    View,
+    StyleSheet,
+    SafeAreaView,
+    Pressable,
+    ActivityIndicator,
+} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import {Context} from '../store/context';
@@ -56,11 +63,8 @@ const JOKES = [
 const Jokes: React.FC = () => {
     const navigation = useNavigation();
     const context = useContext(Context);
-    const {jokesData, jokesLoading} = useJokes();
+    const {jokes, loading} = useJokes();
     const [currentIndex, setCurrentIndex] = useState(0);
-
-    console.log('loading', jokesLoading);
-    console.log(jokesData);
 
     const handleIndexUpdate = (index: number) => {
         setCurrentIndex(index);
@@ -88,9 +92,13 @@ const Jokes: React.FC = () => {
                 </Text>
             </View>
             <View style={styles.carouselContainer}>
-                {!jokesLoading ?? (
+                {loading ? (
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" />
+                    </View>
+                ) : (
                     <Carousel
-                        items={jokesData}
+                        items={jokes}
                         renderItem={(scrollX: any, {item}: {item: Joke}) => (
                             <JokeCard data={item} />
                         )}
@@ -137,6 +145,11 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         textAlign: 'center',
         lineHeight: 45,
+    },
+    loadingContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     carouselContainer: {
         flex: 1,
