@@ -24,7 +24,7 @@ const {width} = Dimensions.get('window');
 const Jokes: React.FC = () => {
     const navigation = useNavigation();
     const context = useContext(Context);
-    const {jokes, loading} = useJokes();
+    const {jokes, loading, fetchMore} = useJokes();
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const handleIndexUpdate = (index: number) => {
@@ -33,6 +33,10 @@ const Jokes: React.FC = () => {
 
     const handleSaveJoke = () => {
         context.addJoke(jokes[currentIndex]);
+    };
+
+    const handleFetchMore = () => {
+        fetchMore();
     };
 
     return (
@@ -69,6 +73,7 @@ const Jokes: React.FC = () => {
                             />
                         )}
                         onIndexUpdate={handleIndexUpdate}
+                        onFetchMore={handleFetchMore}
                     />
                 )}
             </View>

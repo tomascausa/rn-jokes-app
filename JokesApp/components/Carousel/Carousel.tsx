@@ -6,11 +6,17 @@ interface Props {
     items: any[];
     renderItem: any;
     onIndexUpdate?: (number: number) => void;
+    onFetchMore?: () => void;
 }
 
 const {width} = Dimensions.get('window');
 
-const Carousel: FC<Props> = ({items, renderItem, onIndexUpdate}) => {
+const Carousel: FC<Props> = ({
+    items,
+    renderItem,
+    onIndexUpdate,
+    onFetchMore,
+}) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
 
     return (
@@ -22,6 +28,7 @@ const Carousel: FC<Props> = ({items, renderItem, onIndexUpdate}) => {
                 showsHorizontalScrollIndicator={false}
                 scrollEventThrottle={32}
                 pagingEnabled
+                keyExtractor={(_, index) => index.toString()}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {x: scrollX}}}],
                     {useNativeDriver: false},
@@ -32,6 +39,11 @@ const Carousel: FC<Props> = ({items, renderItem, onIndexUpdate}) => {
                             event.nativeEvent.contentOffset.x / width,
                         );
                         onIndexUpdate(index);
+                    }
+                }}
+                onEndReached={() => {
+                    if (onFetchMore) {
+                        onFetchMore();
                     }
                 }}
             />
