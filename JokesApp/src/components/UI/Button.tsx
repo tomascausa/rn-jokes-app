@@ -5,7 +5,7 @@ import {GlobalStyles} from '../../constants/styles';
 export type Props = {
     children: any;
     mode?: string;
-    onPress: () => void;
+    onPress?: () => void;
 };
 
 const Button: React.FC<Props> = ({children, mode, onPress}) => {
