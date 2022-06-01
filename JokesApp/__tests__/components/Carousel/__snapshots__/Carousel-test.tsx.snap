@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Carousel /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <RCTScrollView
+    collapsable={false}
+    data={
+      Array [
+        Object {
+          "id": "1",
+          "joke": "test",
+        },
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={true}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onEndReached={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    pagingEnabled={true}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={32}
+    showsHorizontalScrollIndicator={false}
+    stickyHeaderIndices={Array []}
+    style={Object {}}
+    viewabilityConfigCallbackPairs={Array []}
+  >
+    <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    collapsable={false}
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginTop": 10,
+      }
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "backgroundColor": "black",
+          "borderRadius": 8,
+          "height": 5,
+          "marginHorizontal": 8,
+          "opacity": 1,
+          "width": 50,
+        }
+      }
+    />
+  </View>
+</View>
+`;
