@@ -11,7 +11,6 @@ interface JokesQueryResponse {
 const useJokes = () => {
     const [jokes, setJokes] = useState<Joke[]>([]);
     const [currentJokes, setCurrentJokes] = useState<Joke[]>([]);
-    // const [fetchMore, setFetchMore] = useState(false);
 
     const [fetchJoke, {loading}] = useLazyQuery<JokesQueryResponse>(
         JOKES_QUERY,
@@ -35,11 +34,6 @@ const useJokes = () => {
         setCurrentJokes(fetchedJokes);
     }, [jokes, setJokes, fetchJoke]);
 
-    // const fetchMore = useCallback(() => {
-    //     setCurrentJokes([]);
-    //     handleFetch();
-    // }, []);
-
     const fetchMore = useCallback(() => {
         setCurrentJokes([]);
         handleFetch();
@@ -48,13 +42,6 @@ const useJokes = () => {
     useEffect(() => {
         handleFetch();
     }, []);
-
-    // useEffect(() => {
-    //     if (fetchMore) {
-    //         handleFetch();
-    //         setFetchMore(false);
-    //     }
-    // }, [fetchMore, handleFetch]);
 
     return {
         jokes: currentJokes,
