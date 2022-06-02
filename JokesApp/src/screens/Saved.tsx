@@ -37,6 +37,7 @@ const Saved: React.FC = () => {
                             style={styles.cardContainer}
                             titleStyle={styles.cardTitle}
                             authorStyle={styles.cardAuthor}
+                            itsRemovable={true}
                         />
                     )}
                 />

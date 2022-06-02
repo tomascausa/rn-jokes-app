@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Context Renders correctly 1`] = `
+<Text>
+  Jokes: 
+  0
+</Text>
+`;

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import {View, Animated, StyleSheet, Dimensions} from 'react-native';
 import Paginator from './Paginator';
 
@@ -18,10 +18,24 @@ const Carousel: FC<Props> = ({
     onFetchMore,
 }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;
+    const [
+        onEndReachedCalledDuringMomentum,
+        setOnEndReachedCalledDuringMomentum,
+    ] = useState(true);
+
+    const onEndReached = () => {
+        if (!onEndReachedCalledDuringMomentum && onFetchMore) {
+            if (onFetchMore) {
+                onFetchMore();
+            }
+            setOnEndReachedCalledDuringMomentum(true);
+        }
+    };
 
     return (
         <View style={styles.carouselContainer}>
             <Animated.FlatList
+                testID={'carousel__flat-list'}
                 data={items}
                 renderItem={renderItem.bind(this, scrollX)}
                 horizontal
@@ -29,6 +43,7 @@ const Carousel: FC<Props> = ({
                 scrollEventThrottle={32}
                 pagingEnabled
                 keyExtractor={(_, index) => index.toString()}
+                // onEndReachedThreshold={0.5}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {x: scrollX}}}],
                     {useNativeDriver: false},
@@ -41,10 +56,15 @@ const Carousel: FC<Props> = ({
                         onIndexUpdate(index);
                     }
                 }}
-                onEndReached={() => {
-                    if (onFetchMore) {
-                        onFetchMore();
-                    }
+                // onEndReached={() => {
+                //     if (onFetchMore) {
+                //         onFetchMore();
+                //     }
+                // }}
+                onEndReached={onEndReached.bind(this)}
+                onEndReachedThreshold={0.3}
+                onMomentumScrollBegin={() => {
+                    setOnEndReachedCalledDuringMomentum(false);
                 }}
             />
             <Paginator scrollX={scrollX} itemsQty={items.length} />

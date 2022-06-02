@@ -13,8 +13,12 @@ exports[`<Carousel /> renders correctly 1`] = `
     data={
       Array [
         Object {
-          "id": "1",
-          "joke": "test",
+          "id": "j1",
+          "joke": "Joke 1",
+        },
+        Object {
+          "id": "j2",
+          "joke": "Joke 2",
         },
       ]
     }
@@ -37,9 +41,21 @@ exports[`<Carousel /> renders correctly 1`] = `
     showsHorizontalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={Object {}}
+    testID="carousel__flat-list"
     viewabilityConfigCallbackPairs={Array []}
   >
     <View>
+      <View
+        onLayout={[Function]}
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      />
       <View
         onLayout={[Function]}
         style={
@@ -72,6 +88,19 @@ exports[`<Carousel /> renders correctly 1`] = `
           "height": 5,
           "marginHorizontal": 8,
           "opacity": 1,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "backgroundColor": "black",
+          "borderRadius": 8,
+          "height": 5,
+          "marginHorizontal": 8,
+          "opacity": 0.2,
           "width": 50,
         }
       }

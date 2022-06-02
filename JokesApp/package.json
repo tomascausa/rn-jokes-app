@@ -29,7 +29,7 @@
     "react-navigation": "^4.4.4",
     "react-navigation-stack": "^2.10.4",
     "react-redux": "^8.0.2",
-    "realm": "^10.17.0",
+    "realm": "^10.18.0",
     "redux": "^4.2.0"
   },
   "devDependencies": {
