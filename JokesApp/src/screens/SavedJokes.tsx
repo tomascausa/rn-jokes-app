@@ -9,12 +9,13 @@ import {
 import {Context} from '../store/context';
 import {Joke} from '../types/Joke';
 import {GlobalStyles} from '../constants/styles';
+import {CARD_COLORS} from '../utils/colors';
 import JokeCard from '../components/UI/JokeCard';
 import Separator from '../components/Carousel/Separator';
 
 const {width} = Dimensions.get('window');
 
-const Saved: React.FC = () => {
+const Saved = () => {
     const context = useContext(Context);
 
     return (
@@ -31,13 +32,22 @@ const Saved: React.FC = () => {
                     numColumns={2}
                     showsVerticalScrollIndicator={false}
                     ItemSeparatorComponent={Separator}
-                    renderItem={({item}: {item: Joke}) => (
+                    renderItem={({
+                        item,
+                        index,
+                    }: {
+                        item: Joke;
+                        index: number;
+                    }) => (
                         <JokeCard
                             data={item}
                             style={styles.cardContainer}
                             titleStyle={styles.cardTitle}
                             authorStyle={styles.cardAuthor}
                             itsRemovable={true}
+                            backgroundColor={
+                                CARD_COLORS[index % CARD_COLORS.length]
+                            }
                         />
                     )}
                 />
@@ -54,6 +64,7 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         maxWidth: width * 0.5 - 30,
+        minHeight: 200,
         marginHorizontal: 5,
         paddingTop: 35,
         paddingHorizontal: 15,

@@ -2,14 +2,14 @@ import React from 'react';
 import {MockedProvider} from '@apollo/client/testing';
 import {NavigationContainer} from '@react-navigation/native';
 import renderer from 'react-test-renderer';
-import Saved from '../../src/screens/Saved';
+import SavedJokes from '../../src/screens/SavedJokes';
 
 describe('<Saved />', () => {
     test('renders correctly', () => {
         const component = (
             <MockedProvider>
                 <NavigationContainer>
-                    <Saved />
+                    <SavedJokes />
                 </NavigationContainer>
             </MockedProvider>
         );

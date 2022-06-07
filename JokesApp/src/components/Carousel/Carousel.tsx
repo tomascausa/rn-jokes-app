@@ -2,21 +2,24 @@ import React, {FC, useState} from 'react';
 import {View, Animated, StyleSheet, Dimensions} from 'react-native';
 import Paginator from './Paginator';
 
-interface Props {
+interface CarouselProps {
     items: any[];
     renderItem: any;
+    isLoading: boolean;
     onIndexUpdate?: (number: number) => void;
     onFetchMore?: () => void;
 }
 
 const {width} = Dimensions.get('window');
 
-const Carousel: FC<Props> = ({
+const Carousel = ({
     items,
     renderItem,
+    isLoading = false,
     onIndexUpdate,
     onFetchMore,
-}) => {
+}: CarouselProps) => {
+    const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = React.useRef(new Animated.Value(0)).current;
     const [
         onEndReachedCalledDuringMomentum,
@@ -33,7 +36,11 @@ const Carousel: FC<Props> = ({
     };
 
     return (
-        <View style={styles.carouselContainer}>
+        <View
+            style={[
+                styles.carouselContainer,
+                isLoading ? styles.carouselLoading : null,
+            ]}>
             <Animated.FlatList
                 testID={'carousel__flat-list'}
                 data={items}
@@ -43,31 +50,32 @@ const Carousel: FC<Props> = ({
                 scrollEventThrottle={32}
                 pagingEnabled
                 keyExtractor={(_, index) => index.toString()}
-                // onEndReachedThreshold={0.5}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {x: scrollX}}}],
                     {useNativeDriver: false},
                 )}
+                onEndReachedThreshold={0.3}
+                onMomentumScrollBegin={() => {
+                    setOnEndReachedCalledDuringMomentum(false);
+                }}
                 onMomentumScrollEnd={event => {
                     if (onIndexUpdate) {
                         let index = Math.ceil(
                             event.nativeEvent.contentOffset.x / width,
                         );
+
+                        if (currentIndex < 3) {
+                            setCurrentIndex(currentIndex + 1);
+                        } else {
+                            setCurrentIndex(0);
+                        }
+
                         onIndexUpdate(index);
                     }
                 }}
-                // onEndReached={() => {
-                //     if (onFetchMore) {
-                //         onFetchMore();
-                //     }
-                // }}
                 onEndReached={onEndReached.bind(this)}
-                onEndReachedThreshold={0.3}
-                onMomentumScrollBegin={() => {
-                    setOnEndReachedCalledDuringMomentum(false);
-                }}
             />
-            <Paginator scrollX={scrollX} itemsQty={items.length} />
+            {!isLoading && <Paginator currentIndex={currentIndex} />}
         </View>
     );
 };
@@ -75,6 +83,9 @@ const Carousel: FC<Props> = ({
 const styles = StyleSheet.create({
     carouselContainer: {
         flex: 1,
+    },
+    carouselLoading: {
+        opacity: 0.3,
     },
 });
 

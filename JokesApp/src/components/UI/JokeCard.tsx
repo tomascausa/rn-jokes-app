@@ -7,6 +7,7 @@ import {
     ViewStyle,
     TextStyle,
     Pressable,
+    Animated,
 } from 'react-native';
 import {GlobalStyles} from '../../constants/styles';
 import {Joke} from '../../types/Joke';
@@ -14,30 +15,34 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import {Context} from '../../store/context';
 
-export type JokeCardProps = {
+interface JokeCardProps {
     data: Joke;
     style?: StyleProp<ViewStyle>;
+    animatedStyle?: StyleProp<ViewStyle>;
     titleStyle?: StyleProp<TextStyle>;
     authorStyle?: StyleProp<TextStyle>;
     itsRemovable?: boolean;
-};
+    backgroundColor?: string;
+}
 
-export type AuthorProps = {
+interface AuthorProps {
     label: string;
     style: any;
-};
+}
 
-const Author: React.FC<AuthorProps> = ({label, style}) => {
+const Author = ({label, style}: AuthorProps) => {
     return <Text style={style}>@{label}</Text>;
 };
 
-const JokeCard: React.FC<JokeCardProps> = ({
+const JokeCard = ({
     data,
     style,
+    animatedStyle,
     titleStyle,
     authorStyle,
-    itsRemovable = false,
-}) => {
+    itsRemovable,
+    backgroundColor,
+}: JokeCardProps) => {
     const context = useContext(Context);
     let authorElement;
     let removeIconElement;
@@ -70,10 +75,18 @@ const JokeCard: React.FC<JokeCardProps> = ({
     }
 
     return (
-        <View style={[styles.container, style]}>
-            <Text style={[styles.title, titleStyle]}>{data.joke}</Text>
-            {authorElement}
-            {removeIconElement}
+        <View>
+            <Animated.View
+                style={[
+                    animatedStyle,
+                    styles.container,
+                    style,
+                    {backgroundColor, shadowColor: backgroundColor},
+                ]}>
+                <Text style={[styles.title, titleStyle]}>{data.joke}</Text>
+                {authorElement}
+                {removeIconElement}
+            </Animated.View>
         </View>
     );
 };

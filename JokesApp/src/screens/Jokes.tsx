@@ -14,6 +14,7 @@ import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import {Context} from '../store/context';
 import {Joke} from '../types/Joke';
 import {GlobalStyles} from '../constants/styles';
+import {CARD_COLORS} from '../utils/colors';
 import Button from '../components/UI/Button';
 import JokeCard from '../components/UI/JokeCard';
 import Carousel from '../components/Carousel/Carousel';
@@ -21,7 +22,7 @@ import useJokes from '../hooks/useJokes';
 
 const {width} = Dimensions.get('window');
 
-const Jokes: React.FC = () => {
+const Jokes = () => {
     const navigation = useNavigation();
     const context = useContext(Context);
     const {jokes, loading, fetchMore} = useJokes();
@@ -36,7 +37,7 @@ const Jokes: React.FC = () => {
     };
 
     const handleFetchMore = () => {
-        fetchMore();
+        fetchMore(jokes);
     };
 
     return (
@@ -47,7 +48,7 @@ const Jokes: React.FC = () => {
                 </Text>
                 <Pressable
                     style={styles.headerHeart}
-                    onPress={() => navigation.navigate('Saved')}>
+                    onPress={() => navigation.navigate('SavedJokes')}>
                     <FontAwesomeIcon icon={faHeart} color={'red'} size={28} />
                 </Pressable>
             </View>
@@ -57,25 +58,47 @@ const Jokes: React.FC = () => {
                 </Text>
             </View>
             <View style={styles.carouselContainer}>
-                {loading ? (
+                {loading && (
                     <View style={styles.loadingContainer}>
                         <ActivityIndicator size="large" />
                     </View>
-                ) : (
-                    <Carousel
-                        items={jokes}
-                        renderItem={(scrollX: any, {item}: {item: Joke}) => (
+                )}
+                <Carousel
+                    items={jokes}
+                    renderItem={(
+                        scrollX: any,
+                        {item, index}: {item: Joke; index: number},
+                    ) => {
+                        const inputRange = [
+                            (index - 1) * width,
+                            index * width,
+                            (index + 1) * width,
+                        ];
+                        const outputRange = ['0deg', '0deg', '20deg'];
+                        const translateX = scrollX.interpolate({
+                            inputRange,
+                            outputRange,
+                        });
+
+                        return (
                             <JokeCard
                                 data={item}
-                                style={styles.cardContainer}
+                                style={[styles.cardContainer]}
+                                animatedStyle={{
+                                    transform: [{rotateZ: translateX}],
+                                }}
                                 titleStyle={styles.cardTitle}
                                 authorStyle={styles.cardAuthor}
+                                backgroundColor={
+                                    CARD_COLORS[index % CARD_COLORS.length]
+                                }
                             />
-                        )}
-                        onIndexUpdate={handleIndexUpdate}
-                        onFetchMore={handleFetchMore}
-                    />
-                )}
+                        );
+                    }}
+                    isLoading={loading}
+                    onIndexUpdate={handleIndexUpdate}
+                    onFetchMore={handleFetchMore}
+                />
             </View>
             <View style={styles.buttonContainer}>
                 <Button onPress={() => handleSaveJoke()}>Save</Button>
@@ -118,9 +141,14 @@ const styles = StyleSheet.create({
         lineHeight: 45,
     },
     loadingContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        width: '100%',
+        height: '100%',
     },
     carouselContainer: {
         flex: 1,

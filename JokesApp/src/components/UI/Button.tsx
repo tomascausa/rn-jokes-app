@@ -2,13 +2,13 @@ import React from 'react';
 import {Text, View, StyleSheet, Pressable} from 'react-native';
 import {GlobalStyles} from '../../constants/styles';
 
-export type Props = {
+interface ButtonProps {
     children: any;
     mode?: string;
     onPress?: () => void;
-};
+}
 
-const Button: React.FC<Props> = ({children, mode, onPress}) => {
+const Button = ({children, mode, onPress}: ButtonProps) => {
     return (
         <View>
             <Pressable

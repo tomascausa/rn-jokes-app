@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 
-const Separator: React.FC = () => {
+const Separator = () => {
     return <View style={styles.container} />;
 };
 

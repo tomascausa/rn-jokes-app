@@ -10,7 +10,6 @@ interface JokesQueryResponse {
 
 const useJokes = () => {
     const [jokes, setJokes] = useState<Joke[]>([]);
-    const [currentJokes, setCurrentJokes] = useState<Joke[]>([]);
 
     const [fetchJoke, {loading}] = useLazyQuery<JokesQueryResponse>(
         JOKES_QUERY,
@@ -19,24 +18,32 @@ const useJokes = () => {
         },
     );
 
-    const handleFetch = useCallback(async () => {
-        const fetchedJokes: Joke[] = [];
+    const handleFetch = useCallback(
+        async (currentJokes?: Joke[]) => {
+            let newJokes: Joke[] = [];
+            const fetchedJokes: Joke[] = [];
 
-        for (let i = 0; i < 4; i++) {
-            const joke = await fetchJoke();
+            for (let i = 0; i < 9; i++) {
+                const joke = await fetchJoke();
 
-            if (joke.data) {
-                fetchedJokes.push(joke.data.joke);
+                if (joke.data) {
+                    fetchedJokes.push(joke.data.joke);
+                }
             }
-        }
 
-        setJokes([...jokes, ...fetchedJokes]);
-        setCurrentJokes(fetchedJokes);
-    }, [jokes, setJokes, fetchJoke]);
+            if (currentJokes) {
+                newJokes = [...newJokes, ...currentJokes];
+            } else {
+                newJokes = [...newJokes, ...jokes];
+            }
 
-    const fetchMore = useCallback(() => {
-        setCurrentJokes([]);
-        handleFetch();
+            setJokes([...newJokes, ...fetchedJokes]);
+        },
+        [jokes, setJokes, fetchJoke],
+    );
+
+    const fetchMore = useCallback((oldJokes: Joke[]) => {
+        handleFetch(oldJokes);
     }, []);
 
     useEffect(() => {
@@ -44,8 +51,8 @@ const useJokes = () => {
     }, []);
 
     return {
-        jokes: currentJokes,
-        loading: loading || currentJokes.length < 4,
+        jokes: jokes,
+        loading: loading,
         fetchMore,
     };
 };

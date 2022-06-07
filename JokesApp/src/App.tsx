@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ApolloProvider} from '@apollo/client';
 import {client} from './utils/graphql/client';
 import Jokes from './screens/Jokes';
-import Saved from './screens/Saved';
+import SavedJokes from './screens/SavedJokes';
 import ContextProvider from './store/context';
 
 const Stack = createNativeStackNavigator();
@@ -20,7 +20,11 @@ const App = () => {
                             component={Jokes}
                             options={{headerShown: false}}
                         />
-                        <Stack.Screen name="Saved" component={Saved} />
+                        <Stack.Screen
+                            name="SavedJokes"
+                            component={SavedJokes}
+                            options={{title: 'Saved'}}
+                        />
                     </Stack.Navigator>
                 </NavigationContainer>
             </ContextProvider>
