@@ -27,9 +27,40 @@ const Jokes = () => {
     const context = useContext(Context);
     const {jokes, loading, fetchMore} = useJokes();
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [indicatorIndex, setIndicatorIndex] = useState(0);
+
+    const handleRenderJokeCard = (
+        scrollX: any,
+        {item, index}: {item: Joke; index: number},
+    ) => {
+        const inputRange = [
+            (index - 1) * width,
+            index * width,
+            (index + 1) * width,
+        ];
+        const outputRange = ['0deg', '0deg', '20deg'];
+        const translateX = scrollX.interpolate({
+            inputRange,
+            outputRange,
+        });
+
+        return (
+            <JokeCard
+                data={item}
+                style={[styles.cardContainer]}
+                animatedStyle={{
+                    transform: [{rotateZ: translateX}],
+                }}
+                titleStyle={styles.cardTitle}
+                authorStyle={styles.cardAuthor}
+                backgroundColor={CARD_COLORS[index % CARD_COLORS.length]}
+            />
+        );
+    };
 
     const handleIndexUpdate = (index: number) => {
         setCurrentIndex(index);
+        setIndicatorIndex(index % 4);
     };
 
     const handleSaveJoke = () => {
@@ -65,37 +96,9 @@ const Jokes = () => {
                 )}
                 <Carousel
                     items={jokes}
-                    renderItem={(
-                        scrollX: any,
-                        {item, index}: {item: Joke; index: number},
-                    ) => {
-                        const inputRange = [
-                            (index - 1) * width,
-                            index * width,
-                            (index + 1) * width,
-                        ];
-                        const outputRange = ['0deg', '0deg', '20deg'];
-                        const translateX = scrollX.interpolate({
-                            inputRange,
-                            outputRange,
-                        });
-
-                        return (
-                            <JokeCard
-                                data={item}
-                                style={[styles.cardContainer]}
-                                animatedStyle={{
-                                    transform: [{rotateZ: translateX}],
-                                }}
-                                titleStyle={styles.cardTitle}
-                                authorStyle={styles.cardAuthor}
-                                backgroundColor={
-                                    CARD_COLORS[index % CARD_COLORS.length]
-                                }
-                            />
-                        );
-                    }}
                     isLoading={loading}
+                    indicatorIndex={indicatorIndex}
+                    renderItem={handleRenderJokeCard}
                     onIndexUpdate={handleIndexUpdate}
                     onFetchMore={handleFetchMore}
                 />

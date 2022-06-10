@@ -1,39 +1,45 @@
-import React, {FC, useState} from 'react';
-import {View, Animated, StyleSheet, Dimensions} from 'react-native';
+import React, {useRef} from 'react';
+import {View, Animated, StyleSheet, ViewToken} from 'react-native';
 import Paginator from './Paginator';
 
 interface CarouselProps {
     items: any[];
     renderItem: any;
     isLoading: boolean;
+    indicatorIndex: number;
     onIndexUpdate?: (number: number) => void;
     onFetchMore?: () => void;
 }
-
-const {width} = Dimensions.get('window');
 
 const Carousel = ({
     items,
     renderItem,
     isLoading = false,
+    indicatorIndex,
     onIndexUpdate,
     onFetchMore,
 }: CarouselProps) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = React.useRef(new Animated.Value(0)).current;
-    const [
-        onEndReachedCalledDuringMomentum,
-        setOnEndReachedCalledDuringMomentum,
-    ] = useState(true);
 
     const onEndReached = () => {
-        if (!onEndReachedCalledDuringMomentum && onFetchMore) {
-            if (onFetchMore) {
-                onFetchMore();
-            }
-            setOnEndReachedCalledDuringMomentum(true);
+        if (onFetchMore) {
+            onFetchMore();
         }
     };
+
+    const onViewableItemsChanged = React.useRef(
+        ({changed}: {changed: ViewToken[]}) => {
+            if (changed && changed.length > 0 && onIndexUpdate) {
+                onIndexUpdate(changed[0].index || 0);
+            }
+        },
+    );
+
+    const viewabilityConfig = useRef({
+        itemVisiblePercentThreshold: 90,
+        waitForInteraction: true,
+        minimumViewTime: 5,
+    });
 
     return (
         <View
@@ -47,35 +53,18 @@ const Carousel = ({
                 renderItem={renderItem.bind(this, scrollX)}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={32}
+                scrollEventThrottle={64}
                 pagingEnabled
                 keyExtractor={(_, index) => index.toString()}
                 onScroll={Animated.event(
                     [{nativeEvent: {contentOffset: {x: scrollX}}}],
                     {useNativeDriver: false},
                 )}
-                onEndReachedThreshold={0.3}
-                onMomentumScrollBegin={() => {
-                    setOnEndReachedCalledDuringMomentum(false);
-                }}
-                onMomentumScrollEnd={event => {
-                    if (onIndexUpdate) {
-                        let index = Math.ceil(
-                            event.nativeEvent.contentOffset.x / width,
-                        );
-
-                        if (currentIndex < 3) {
-                            setCurrentIndex(currentIndex + 1);
-                        } else {
-                            setCurrentIndex(0);
-                        }
-
-                        onIndexUpdate(index);
-                    }
-                }}
+                onViewableItemsChanged={onViewableItemsChanged.current}
+                viewabilityConfig={viewabilityConfig.current}
                 onEndReached={onEndReached.bind(this)}
             />
-            {!isLoading && <Paginator currentIndex={currentIndex} />}
+            {!isLoading && <Paginator currentIndex={indicatorIndex} />}
         </View>
     );
 };
