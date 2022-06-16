@@ -117,16 +117,123 @@ exports[`<Jokes /> renders correctly 1`] = `
   >
     <View
       style={
-        Object {
-          "alignItems": "center",
-          "flex": 1,
-          "justifyContent": "center",
-        }
+        Array [
+          Object {
+            "flex": 1,
+          },
+          null,
+        ]
       }
     >
-      <ActivityIndicator
-        size="large"
-      />
+      <RCTScrollView
+        collapsable={false}
+        data={Array []}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        horizontal={true}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onEndReached={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        onViewableItemsChanged={[Function]}
+        pagingEnabled={true}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={64}
+        showsHorizontalScrollIndicator={false}
+        stickyHeaderIndices={Array []}
+        style={Object {}}
+        testID="flatList"
+        viewabilityConfig={
+          Object {
+            "itemVisiblePercentThreshold": 90,
+            "minimumViewTime": 5,
+            "waitForInteraction": true,
+          }
+        }
+        viewabilityConfigCallbackPairs={
+          Array [
+            Object {
+              "onViewableItemsChanged": [Function],
+              "viewabilityConfig": Object {
+                "itemVisiblePercentThreshold": 90,
+                "minimumViewTime": 5,
+                "waitForInteraction": true,
+              },
+            },
+          ]
+        }
+      >
+        <View />
+      </RCTScrollView>
+      <View
+        collapsable={false}
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "marginTop": 10,
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "borderRadius": 8,
+              "height": 5,
+              "marginHorizontal": 8,
+              "opacity": 1,
+              "width": 50,
+            }
+          }
+        />
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "borderRadius": 8,
+              "height": 5,
+              "marginHorizontal": 8,
+              "opacity": 0.3,
+              "width": 50,
+            }
+          }
+        />
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "borderRadius": 8,
+              "height": 5,
+              "marginHorizontal": 8,
+              "opacity": 0.3,
+              "width": 50,
+            }
+          }
+        />
+        <View
+          collapsable={false}
+          style={
+            Object {
+              "backgroundColor": "black",
+              "borderRadius": 8,
+              "height": 5,
+              "marginHorizontal": 8,
+              "opacity": 0.3,
+              "width": 50,
+            }
+          }
+        />
+      </View>
     </View>
   </View>
   <View

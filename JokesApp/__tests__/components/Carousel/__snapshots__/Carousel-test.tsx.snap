@@ -3,9 +3,12 @@
 exports[`<Carousel /> renders correctly 1`] = `
 <View
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      null,
+    ]
   }
 >
   <RCTScrollView
@@ -34,15 +37,34 @@ exports[`<Carousel /> renders correctly 1`] = `
     onScroll={[Function]}
     onScrollBeginDrag={[Function]}
     onScrollEndDrag={[Function]}
+    onViewableItemsChanged={[Function]}
     pagingEnabled={true}
     removeClippedSubviews={false}
     renderItem={[Function]}
-    scrollEventThrottle={32}
+    scrollEventThrottle={64}
     showsHorizontalScrollIndicator={false}
     stickyHeaderIndices={Array []}
     style={Object {}}
-    testID="carousel__flat-list"
-    viewabilityConfigCallbackPairs={Array []}
+    testID="flatList"
+    viewabilityConfig={
+      Object {
+        "itemVisiblePercentThreshold": 90,
+        "minimumViewTime": 5,
+        "waitForInteraction": true,
+      }
+    }
+    viewabilityConfigCallbackPairs={
+      Array [
+        Object {
+          "onViewableItemsChanged": [Function],
+          "viewabilityConfig": Object {
+            "itemVisiblePercentThreshold": 90,
+            "minimumViewTime": 5,
+            "waitForInteraction": true,
+          },
+        },
+      ]
+    }
   >
     <View>
       <View
@@ -87,7 +109,7 @@ exports[`<Carousel /> renders correctly 1`] = `
           "borderRadius": 8,
           "height": 5,
           "marginHorizontal": 8,
-          "opacity": 1,
+          "opacity": 0.3,
           "width": 50,
         }
       }
@@ -100,7 +122,33 @@ exports[`<Carousel /> renders correctly 1`] = `
           "borderRadius": 8,
           "height": 5,
           "marginHorizontal": 8,
-          "opacity": 0.2,
+          "opacity": 0.3,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "backgroundColor": "black",
+          "borderRadius": 8,
+          "height": 5,
+          "marginHorizontal": 8,
+          "opacity": 0.3,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      collapsable={false}
+      style={
+        Object {
+          "backgroundColor": "black",
+          "borderRadius": 8,
+          "height": 5,
+          "marginHorizontal": 8,
+          "opacity": 0.3,
           "width": 50,
         }
       }

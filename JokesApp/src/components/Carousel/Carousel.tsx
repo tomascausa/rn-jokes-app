@@ -48,7 +48,7 @@ const Carousel = ({
                 isLoading ? styles.carouselLoading : null,
             ]}>
             <Animated.FlatList
-                testID={'carousel__flat-list'}
+                testID={'flatList'}
                 data={items}
                 renderItem={renderItem.bind(this, scrollX)}
                 horizontal
