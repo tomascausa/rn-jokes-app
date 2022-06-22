@@ -1,4 +1,4 @@
-package com.jokesapp.newarchitecture.modules;
+package com.tomascausa.jokesapp.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

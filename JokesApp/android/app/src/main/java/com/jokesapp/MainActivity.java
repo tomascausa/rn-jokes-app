@@ -1,4 +1,4 @@
-package com.jokesapp;
+package com.tomascausa.jokesapp;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

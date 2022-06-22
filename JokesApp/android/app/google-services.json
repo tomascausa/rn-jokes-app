@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "210909429979",
+    "project_id": "rn-jokes-app",
+    "storage_bucket": "rn-jokes-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210909429979:android:d1df1bb369339d224dccfe",
+        "android_client_info": {
+          "package_name": "com.tomascausa.jokesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210909429979-i5vqehhuuqb9hqvdldmpublgi11l7c6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAia31cwe-FEKhwRPwet_8-Pnmo-Ad7Q_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210909429979-i5vqehhuuqb9hqvdldmpublgi11l7c6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
